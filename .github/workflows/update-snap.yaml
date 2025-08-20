@@ -60,6 +60,9 @@ jobs:
           
           sed -i "s/${current_release}/${version}/g" $GITHUB_WORKSPACE/main/snap/snapcraft.yaml
 
+          # for the ocb source-tag, remove patch part from new version (e.g. 0.130.4 → 0.130.0)
+          base_version=$(echo "$version" | awk -F. '{print $1 "." $2 ".0"}')
+          yq -i '.parts.ocb.source-tag = "v" + env(base_version)' $GITHUB_WORKSPACE/main/snap/snapcraft.yaml
       - name: Import and configure the GPG key for Noctua
         uses: crazy-max/ghaction-import-gpg@v6
         with:
