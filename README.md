@@ -26,3 +26,19 @@
 Once installed, a default configuration file will be created at `/etc/otel-ebpf-profiler/config.yaml`.
 
 To write a configuration file to suit you needs, consult the [official documentation](https://opentelemetry.io/docs/collector/).
+
+## Testing
+
+Before running the smoke test, make sure you have the following installed:
+
+- [just](https://github.com/casey/just)
+- [snapcraft](https://snapcraft.io/docs/snapcraft-overview)
+- [LXD](https://documentation.ubuntu.com/lxd/) 
+- [yq](https://github.com/mikefarah/yq)
+
+Once the prerequisites are installed, you can run a smoke test to validate that your locally developed snap can be packed, deployed, and is running correctly:
+
+```bash
+just smoke
+```
+
