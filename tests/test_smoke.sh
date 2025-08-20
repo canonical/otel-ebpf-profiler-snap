@@ -17,16 +17,16 @@ verify() {
 
     # verify that the snap stays active for a while
     while [ "$COUNT" -lt "$MAX" ]; do
-        state=$(sudo snap info "$SERVICE" | yq -r ".services.\"$SERVICE\"" | awk -F ', ' '{print $3}')
+        state=$(sudo snap info "$SNAP_NAME" | yq -r ".services.\"$SNAP_NAME\"" | awk -F ', ' '{print $3}')
         if [[ "$state" != "active" ]]; then
-            echo "❌ $SERVICE is not active (state=$state)"
+            echo "❌ $SNAP_NAME is not active (state=$state)"
             exit 1
         fi
         COUNT=$((COUNT + 1))
         sleep "$INTERVAL"
     done
 
-    echo "✅ $SERVICE is active and running!"
+    echo "✅ $SNAP_NAME is active and running!"
     exit 0
 }
 
