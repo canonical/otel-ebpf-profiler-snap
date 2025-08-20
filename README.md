@@ -15,7 +15,7 @@
 
 ## Install
 
-    sudo snap install otel-ebpf-profiler
+    sudo snap install otel-ebpf-profiler --edge --classic
 
 ([Don't have snapd installed?](https://snapcraft.io/docs/core/install))
 
