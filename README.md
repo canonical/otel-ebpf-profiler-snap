@@ -6,7 +6,7 @@
 
 
 
-<p align="center"><b>This is the snap for <a href="https://github.com/open-telemetry/opentelemetry-ebpf-profiler">OpenTelemetry eBPF Profiler</a></b>, <i>An OpenTelemetry Collector distribution that is made specifically to be used as a whole-system, cross-language profiler for Linux via eBPF.
+<p align="center"><b>This is the snap for <a href="https://github.com/open-telemetry/opentelemetry-ebpf-profiler">OpenTelemetry eBPF Profiler</a></b>, <i>An OpenTelemetry Collector distribution that is made specifically to be used as a whole-system, cross-language profiler for Linux via eBPF.</i>
 </p>
 
 
