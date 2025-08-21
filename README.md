@@ -36,6 +36,11 @@ Before running the smoke test, make sure you have the following installed:
 - [LXD](https://documentation.ubuntu.com/lxd/) 
 - [yq](https://github.com/mikefarah/yq)
 
+You can install them by running:
+```bash
+just install-test-dependencies
+```
+
 Once the prerequisites are installed, you can run a smoke test to validate that your locally developed snap can be packed, deployed, and is running correctly:
 
 ```bash
