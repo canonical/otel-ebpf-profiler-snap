@@ -6,7 +6,7 @@
 
 
 
-<p align="center"><b>This is the snap for <a href="https://github.com/open-telemetry/opentelemetry-ebpf-profiler">OpenTelemetry eBPF Profiler</a></b>, <i>An OpenTelemetry Collector distribution that is made specifically to be used as a whole-system, cross-language profiler for Linux via eBPF.
+<p align="center"><b>This is the snap for <a href="https://github.com/open-telemetry/opentelemetry-ebpf-profiler">OpenTelemetry eBPF Profiler</a></b>, <i>An OpenTelemetry Collector distribution that is made specifically to be used as a whole-system, cross-language profiler for Linux via eBPF.</i>
 </p>
 
 
@@ -26,3 +26,24 @@
 Once installed, a default configuration file will be created at `/etc/otel-ebpf-profiler/config.yaml`.
 
 To write a configuration file to suit you needs, consult the [official documentation](https://opentelemetry.io/docs/collector/).
+
+## Testing
+
+Before running the smoke test, make sure you have the following installed:
+
+- [just](https://github.com/casey/just)
+- [snapcraft](https://snapcraft.io/docs/snapcraft-overview)
+- [LXD](https://documentation.ubuntu.com/lxd/) 
+- [yq](https://github.com/mikefarah/yq)
+
+You can install them by running:
+```bash
+just install-test-dependencies
+```
+
+Once the prerequisites are installed, you can run a smoke test to validate that your locally developed snap can be packed, deployed, and is running correctly:
+
+```bash
+just smoke
+```
+
