@@ -1,6 +1,6 @@
 name: otel-ebpf-profiler
 title: OpenTelemetry eBPF Profiler
-version: '0.130.0'
+version: '0.133.0'
 summary: Whole-system, cross-language profiler for Linux via eBPF.
 description: |
   An OpenTelemetry Collector distribution that is made specifically to be used as a whole-system,
@@ -46,7 +46,7 @@ parts:
     plugin: go
     source: "https://github.com/open-telemetry/opentelemetry-collector.git"
     source-type: "git"
-    source-tag: "v0.130.0"
+    source-tag: "v0.133.0"
     source-depth: 1
     source-subdir: "cmd/builder"
     build-snaps:
@@ -67,7 +67,7 @@ parts:
       - wget
     override-build: |
       # Create the binary
-      wget https://raw.githubusercontent.com/open-telemetry/opentelemetry-collector-releases/refs/tags/v0.130.0/distributions/otelcol-ebpf-profiler/manifest.yaml -O ${CRAFT_PART_BUILD}/manifest.yaml
+      wget https://raw.githubusercontent.com/open-telemetry/opentelemetry-collector-releases/refs/tags/v0.133.0/distributions/otelcol-ebpf-profiler/manifest.yaml -O ${CRAFT_PART_BUILD}/manifest.yaml
       builder --config="${CRAFT_PART_BUILD}/manifest.yaml"
       install -D -m755 ${CRAFT_PART_BUILD}/_build/otelcol-ebpf-profiler ${CRAFT_PART_INSTALL}/bin/otel-ebpf-profiler
     build-attributes:
