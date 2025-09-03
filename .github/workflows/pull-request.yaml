@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         arch: [amd64, arm64]
-    runs-on: ${{ matrix.arch == 'amd64' && 'ubuntu-latest' || 'ubuntu-24.04-arm' }}
+    runs-on: ${{ matrix.arch == 'amd64' && 'ubuntu-latest' || 'Ubuntu_ARM64_4C_16G_03' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
