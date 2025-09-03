@@ -38,17 +38,9 @@ jobs:
         shell: bash
         run: |
           release=$(yq '.version' $GITHUB_WORKSPACE/main/snap/snapcraft.yaml)
-          latest=${{steps.latest-release.outputs.release}}
-
-          # Skip if the latest release is a nightly
-          if [[ "$latest" == *"nightly"* ]]; then
-            echo "Latest release $latest is a nightly, skipping."
-            exit 0
-          fi
-          
-          if [ "$release" != "$latest" ]; then
-            echo "release=$latest" >> $GITHUB_OUTPUT
-            echo "New upstream release $latest found"
+          if [ "${release}" != "${{steps.latest-release.outputs.release}}" ]; then
+            echo "release=${{steps.latest-release.outputs.release}}" >> $GITHUB_OUTPUT
+            echo "New upstream release ${{steps.latest-release.outputs.release}} found"
           else
             echo "No new upstream release found"
           fi

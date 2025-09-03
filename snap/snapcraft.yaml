@@ -1,6 +1,6 @@
 name: otel-ebpf-profiler
 title: OpenTelemetry eBPF Profiler
-version: '0.131.0'
+version: '0.133.0'
 summary: Whole-system, cross-language profiler for Linux via eBPF.
 description: |
   An OpenTelemetry Collector distribution that is made specifically to be used as a whole-system,
