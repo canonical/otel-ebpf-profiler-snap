@@ -46,8 +46,8 @@ parts:
     plugin: dump
     source-type: tar
     source: 
-      - to amd64: https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.131.0/otelcol-ebpf-profiler_0.133.0_linux_amd64.tar.gz
-      - to arm64: https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.131.0/otelcol-ebpf-profiler_0.133.0_linux_arm64.tar.gz
+      - to amd64: https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.133.0/otelcol-ebpf-profiler_0.133.0_linux_amd64.tar.gz
+      - to arm64: https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.133.0/otelcol-ebpf-profiler_0.133.0_linux_arm64.tar.gz
       - else: fail
     override-build: |
       install -D -m755 otelcol-ebpf-profiler $SNAPCRAFT_PART_INSTALL/bin/otel-ebpf-profiler
