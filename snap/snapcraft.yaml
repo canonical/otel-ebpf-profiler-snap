@@ -72,3 +72,4 @@ parts:
       install -D -m755 ${CRAFT_PART_BUILD}/_build/otelcol-ebpf-profiler ${CRAFT_PART_INSTALL}/bin/otel-ebpf-profiler
     build-attributes:
       - enable-patchelf
+
