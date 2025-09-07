@@ -12,27 +12,22 @@ env:
   SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
 
 jobs:
-  build-and-release:
-    name: Build & release classic snap
+  build-and-test:
+    name: Quality Checks
+    uses: ./.github/workflows/_build-and-test-snap.yaml
+    secrets: inherit
+  release-snaps:
+    needs:
+    - build-and-test
     strategy:
-        matrix:
-          arch: [amd64, arm64]
-    runs-on: ${{ matrix.arch == 'amd64' && 'ubuntu-latest' || 'Ubuntu_ARM64_4C_16G_03' }}
+      matrix:
+        arch: [amd64, arm64]
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup LXD
-        uses: canonical/setup-lxd@v0.1.3
-
-      - name: Install dependencies
-        run: |
-          sudo snap install --classic --channel edge snapcraft
-          sudo snap install yq
-          sudo snap install just --classic
-
-      - name: Pack Snap
-        run: snapcraft pack -v
-
-      - name: Upload and Publish Snap
-        run: snapcraft upload --release edge otel-ebpf-profiler_*_*.snap
+      - name: Download snap artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: snap-${{ matrix.arch }}
+          path: .
+      - name: Upload and release snap
+        run: snapcraft upload --release edge otel-ebpf-profiler_*_${{ matrix.arch }}.snap

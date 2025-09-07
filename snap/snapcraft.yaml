@@ -35,27 +35,24 @@ parts:
     source: ./snap/
     source-type: local
     override-build: |
-      install -D local/command-wrapper $CRAFT_PART_INSTALL/
+      install -D $CRAFT_PART_SRC/local/command-wrapper $CRAFT_PART_INSTALL/
   config:
     plugin: dump
     source: ./snap/
     source-type: local
     override-build: |
-      install -D config.yaml $CRAFT_PART_INSTALL/
+      install -D $CRAFT_PART_SRC/config.yaml $CRAFT_PART_INSTALL/
   ocb:
     plugin: go
     source: "https://github.com/open-telemetry/opentelemetry-collector.git"
     source-type: "git"
     source-tag: "v0.133.0"
     source-depth: 1
-    source-subdir: "cmd/builder"
     build-snaps:
       - go/1.24/stable
-    build-environment:
-      - CGO_ENABLED: "0"
-      - GOOS: linux
-    stage:
-      - bin/builder
+    override-build: |
+      cd cmd/builder
+      CGO_ENABLED=0 go build -trimpath -o ${CRAFT_PART_INSTALL}/bin/builder .
     prime:
       - "-*"
   ebpf-profiler:
@@ -68,8 +65,9 @@ parts:
     override-build: |
       # Create the binary
       wget https://raw.githubusercontent.com/open-telemetry/opentelemetry-collector-releases/refs/tags/v0.133.0/distributions/otelcol-ebpf-profiler/manifest.yaml -O ${CRAFT_PART_BUILD}/manifest.yaml
-      builder --config="${CRAFT_PART_BUILD}/manifest.yaml"
+      # Starting from v0.0.202531, the eBPF profiler build no longer requires CGO.
+      # By disabling CGO, we ensure the resulting binary is fully static.
+      # This eliminates the linter warnings about missing dynamic linker.
+      CGO_ENABLED=0 builder --config="${CRAFT_PART_BUILD}/manifest.yaml"
       install -D -m755 ${CRAFT_PART_BUILD}/_build/otelcol-ebpf-profiler ${CRAFT_PART_INSTALL}/bin/otel-ebpf-profiler
-    build-attributes:
-      - enable-patchelf
 
