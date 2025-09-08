@@ -29,5 +29,8 @@ jobs:
         with:
           name: snap-${{ matrix.arch }}
           path: .
+      - name: Install dependencies
+        run: |
+          sudo snap install --classic --channel edge snapcraft
       - name: Upload and release snap
         run: snapcraft upload --release edge otel-ebpf-profiler_*_${{ matrix.arch }}.snap
