@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# we need to enable service.profilesSupport feature gate to use the profiles pipeline
+FEATURE_GATES="--feature-gates service.profilesSupport"
+DEFAULT_CONFIG_FILE="/etc/otel-ebpf-profiler/config.yaml"
+DEFAULT_LOG_FILE="/var/log/otel-ebpf-profiler.log"
+
+# redirect both stdout and stderr to $DEFAULT_LOG_FILE
+exec "$SNAP/bin/otel-ebpf-profiler" $FEATURE_GATES "--config" "$DEFAULT_CONFIG_FILE" 2>&1  | tee -a $DEFAULT_LOG_FILE

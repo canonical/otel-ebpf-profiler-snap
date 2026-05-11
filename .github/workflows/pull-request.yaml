@@ -1,12 +1,13 @@
-# Build and test the snap on pull_request to ensure the snap is functional before merging to main
 name: Pull Request
 
 on:
   pull_request:
+    branches: ["**"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build-and-test:
-    name: Quality Checks
-    uses: ./.github/workflows/_build-and-test-snap.yaml
-    secrets: inherit
-
+  pull-request:
+    uses: canonical/observability/.github/workflows/snap-pull-request.yaml@v2

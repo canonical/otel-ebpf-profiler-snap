@@ -1,0 +1,11 @@
+receivers:
+  profiling:
+    SamplesPerSecond: 19
+exporters:
+  debug:
+service:
+  pipelines:
+    profiles:
+      receivers: [profiling]
+      processors: []
+      exporters: [debug]

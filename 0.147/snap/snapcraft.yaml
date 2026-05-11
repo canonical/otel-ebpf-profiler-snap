@@ -1,6 +1,6 @@
 name: otel-ebpf-profiler
 title: OpenTelemetry eBPF Profiler
-version: '0.135.0'
+version: '0.147.0'
 summary: Whole-system, cross-language profiler for Linux via eBPF.
 description: |
   An OpenTelemetry Collector distribution that is made specifically to be used as a whole-system,
@@ -11,16 +11,12 @@ website:
   - https://github.com/canonical/otel-ebpf-profiler-snap
 issues: 
   - https://github.com/canonical/otel-ebpf-profiler-snap/issues
-icon: ./logo.svg
+icon: ./snap/local/logo.svg
 license: Apache-2.0
 base: core24
 platforms:
   amd64:
-    build-on: [amd64]
-    build-for: [amd64]
   arm64:
-    build-on: [arm64]
-    build-for: [arm64]
 confinement: classic
 apps:
   otel-ebpf-profiler:
@@ -46,10 +42,10 @@ parts:
     plugin: go
     source: "https://github.com/open-telemetry/opentelemetry-collector.git"
     source-type: "git"
-    source-tag: "v0.135.0"
+    source-tag: "v0.147.0"
     source-depth: 1
     build-snaps:
-      - go/1.24/stable
+      - go/1.25/candidate
     override-build: |
       cd cmd/builder
       CGO_ENABLED=0 go build -trimpath -o ${CRAFT_PART_INSTALL}/bin/builder .
@@ -64,7 +60,7 @@ parts:
       - wget
     override-build: |
       # Create the binary
-      wget https://raw.githubusercontent.com/open-telemetry/opentelemetry-collector-releases/refs/tags/v0.135.0/distributions/otelcol-ebpf-profiler/manifest.yaml -O ${CRAFT_PART_BUILD}/manifest.yaml
+      wget https://raw.githubusercontent.com/open-telemetry/opentelemetry-collector-releases/refs/tags/v0.147.0/distributions/otelcol-ebpf-profiler/manifest.yaml -O ${CRAFT_PART_BUILD}/manifest.yaml
       # Starting from v0.0.202531, the eBPF profiler build no longer requires CGO.
       # By disabling CGO, we ensure the resulting binary is fully static.
       # This eliminates the linter warnings about missing dynamic linker.
