@@ -2,7 +2,9 @@ name: Pull Request
 
 on:
   pull_request:
-    branches: ["**"]
+    branches:
+      - main
+      - "track/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
