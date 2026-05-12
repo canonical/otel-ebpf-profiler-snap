@@ -1,0 +1,49 @@
+summary: Verify the otel-ebpf-profiler snap installs and stays active
+
+environment:
+  SNAP_NAME: otel-ebpf-profiler
+  MAX_RETRIES: "6"
+  INTERVAL: "5"
+
+prepare: |
+  snap install "${CRAFT_ARTIFACT}" --dangerous --classic
+  snap start "${SNAP_NAME}"
+
+execute: |
+  # Wait for service to become active (with timeout)
+  echo "Waiting for ${SNAP_NAME} to become active..."
+  for i in $(seq 1 "$MAX_RETRIES"); do
+    state=$(snap services "${SNAP_NAME}" | tail -1 | awk '{print $3}')
+    if [ "$state" = "active" ]; then
+      echo "${SNAP_NAME} is now active"
+      break
+    fi
+    if [ "$i" -eq "$MAX_RETRIES" ]; then
+      echo "❌ ${SNAP_NAME} did not become active within timeout (state=$state)"
+      exit 1
+    fi
+    echo "[$i] Waiting... (state=$state)"
+    sleep "$INTERVAL"
+  done
+
+  # Verify it stays active
+  COUNT=0
+  while [ "$COUNT" -lt "$MAX_RETRIES" ]; do
+    state=$(snap services "${SNAP_NAME}" | tail -1 | awk '{print $3}')
+    if [ "$state" != "active" ]; then
+      echo "❌ ${SNAP_NAME} stopped being active (state=$state)"
+      exit 1
+    fi
+    echo "[${COUNT}] ${SNAP_NAME} is active ..."
+    COUNT=$((COUNT + 1))
+    sleep "$INTERVAL"
+  done
+
+  echo "✅ ${SNAP_NAME} is active and running!"
+
+restore: |
+  snap remove "${SNAP_NAME}" --purge || true
+
+debug: |
+  snap logs "${SNAP_NAME}" -n 50 || true
+  journalctl -xe --no-pager | tail -50 || true
