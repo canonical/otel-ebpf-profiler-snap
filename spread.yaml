@@ -1,4 +1,4 @@
-project: otel-ebpf-profiler
+project: opentelemetry-collector
 
 backends:
   craft:
